@@ -1,0 +1,32 @@
+/* .Contacts {
+  text-align: center;
+} */
+
+.ContactsList {
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 350px;
+}
+
+.Item {
+  display: flex;
+  justify-content: space-between;
+  margin-left: -35px;
+  margin-bottom: 10px;
+}
+
+.Name {
+  margin-right: -80px;
+  white-space: nowrap;
+}
+
+/* .Number {
+  margin-right: 55px;
+} */
+
+.ButtonDelete {
+  border-radius: 4px;
+  background-color: rgb(203, 230, 253);
+  cursor: pointer;
+}
