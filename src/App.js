@@ -33,13 +33,6 @@ class App extends Component {
       console.log('Обновилось поле contacts, записываю contacts в хранилище');
       localStorage.setItem('contacts', JSON.stringify(nextContacts));
     }
-
-    // if (
-    //   nextContacts.length > prevContacts.length &&
-    //   prevContacts.length !== 0
-    // ) {
-    //   this.toggleModal();
-    // }
   }
 
   addContact = ({ name, number }) => {
@@ -77,7 +70,7 @@ class App extends Component {
   onInputFilter = event => {
     const filterInputValue = event.currentTarget.value;
     const allContacts = this.state.contacts;
-    console.log(allContacts);
+    // console.log(allContacts);
 
     const filteredContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(filterInputValue),
