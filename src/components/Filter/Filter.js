@@ -17,14 +17,8 @@ const Filter = ({ onInputFilter }) => {
   );
 };
 
-// Filter.protoTypes = {
-//     contacts: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         id: PropTypes.string.isRequired,
-//         name: PropTypes.string.isRequired,
-//         number: PropTypes.string.isRequired,
-//       }),
-//     ).isRequired,
-// };
+Filter.protoTypes = {
+  onInputFilter: PropTypes.func.isRequired,
+};
 
 export default Filter;
