@@ -14,6 +14,9 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     name: '',
+    number: '',
+    filteredContacts: [],
+    filter: '',
   };
 
   componentDidMount() {
@@ -28,9 +31,11 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const nextContacts = this.state.contacts;
     const prevContacts = prevState.contacts;
+    // console.log('prevContacts', prevContacts);
+    // console.log('nextContacts', nextContacts);
 
     if (nextContacts !== prevContacts) {
-      console.log('Обновилось поле contacts, записываю contacts в хранилище');
+      // console.log('Обновилось поле contacts, записываю contacts в хранилище');
       localStorage.setItem('contacts', JSON.stringify(nextContacts));
     }
   }
@@ -57,46 +62,37 @@ class App extends Component {
   deleteContact = event => {
     event.preventDefault();
     const id = event.currentTarget.id;
-
-    const newContacts = this.state.contacts.filter(
-      contact => contact.id !== id,
-    );
+    const { contacts, filteredContacts } = this.state;
 
     this.setState({
-      contacts: [...newContacts],
+      contacts: contacts.filter(contact => contact.id !== id),
+      filteredContacts: filteredContacts.filter(contact => contact.id !== id),
     });
   };
 
-  onInputFilter = event => {
-    const filterInputValue = event.currentTarget.value;
-    const allContacts = this.state.contacts;
-    // console.log(allContacts);
+  onInputFilter = filter => {
+    const contacts = this.state.contacts;
 
-    const filteredContacts = this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filterInputValue),
+    const filteredContacts = contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase()),
     );
 
-    this.setState({ filteredContacts: [...filteredContacts] });
+    this.setState({ filteredContacts: filteredContacts, filter: filter });
   };
 
   render() {
-    const { contacts, filteredContacts, name } = this.state;
-    console.log(contacts);
+    const { contacts, filteredContacts, filter } = this.state;
 
     return (
       <>
         <h2 className="Title">Phonebook</h2>
-
         <Form onSubmit={this.addContact}></Form>
 
         <h2 className="Title">Contacts</h2>
-
         <Filter onInputFilter={this.onInputFilter}></Filter>
 
         <Contacts
-          contacts={contacts}
-          filteredContacts={filteredContacts}
-          name={name}
+          contacts={filter ? filteredContacts : contacts}
           onSubmit={this.deleteContact}
         ></Contacts>
       </>
