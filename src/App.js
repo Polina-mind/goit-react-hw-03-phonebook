@@ -13,9 +13,6 @@ class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    name: '',
-    number: '',
-    filteredContacts: [],
     filter: '',
   };
 
@@ -31,11 +28,8 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const nextContacts = this.state.contacts;
     const prevContacts = prevState.contacts;
-    // console.log('prevContacts', prevContacts);
-    // console.log('nextContacts', nextContacts);
 
     if (nextContacts !== prevContacts) {
-      // console.log('Обновилось поле contacts, записываю contacts в хранилище');
       localStorage.setItem('contacts', JSON.stringify(nextContacts));
     }
   }
@@ -59,29 +53,30 @@ class App extends Component {
     }
   };
 
-  deleteContact = event => {
-    event.preventDefault();
-    const id = event.currentTarget.id;
-    const { contacts, filteredContacts } = this.state;
+  deleteContact = id => {
+    const { contacts } = this.state;
 
     this.setState({
       contacts: contacts.filter(contact => contact.id !== id),
-      filteredContacts: filteredContacts.filter(contact => contact.id !== id),
     });
   };
 
   onInputFilter = filter => {
-    const contacts = this.state.contacts;
-
-    const filteredContacts = contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase()),
-    );
-
-    this.setState({ filteredContacts: filteredContacts, filter: filter });
+    this.setState({
+      filter: filter,
+    });
   };
 
   render() {
-    const { contacts, filteredContacts, filter } = this.state;
+    const { contacts, filter } = this.state;
+
+    const getVisibleContacts = (contacts, filter) => {
+      const normalizedFilter = filter.toLowerCase();
+
+      return contacts.filter(({ name }) =>
+        name.toLowerCase().includes(normalizedFilter),
+      );
+    };
 
     return (
       <>
@@ -92,7 +87,7 @@ class App extends Component {
         <Filter onInputFilter={this.onInputFilter}></Filter>
 
         <Contacts
-          contacts={filter ? filteredContacts : contacts}
+          contacts={filter ? getVisibleContacts(contacts, filter) : contacts}
           onSubmit={this.deleteContact}
         ></Contacts>
       </>

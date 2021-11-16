@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import './Form.css';
 
 class Form extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     name: '',
     number: '',
@@ -60,9 +64,5 @@ class Form extends Component {
     );
   }
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default Form;

@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import './Filter.css';
 
 class Filter extends Component {
+  static propTypes = {
+    onInputFilter: PropTypes.func.isRequired,
+  };
+
   state = {
     filter: '',
   };
@@ -30,9 +34,5 @@ class Filter extends Component {
     );
   }
 }
-
-Filter.propTypes = {
-  onInputFilter: PropTypes.func.isRequired,
-};
 
 export default Filter;

@@ -13,7 +13,7 @@ const Contacts = ({ contacts, onSubmit }) => {
             <button
               className="ButtonDelete"
               type="submit"
-              onClick={onSubmit}
+              onClick={() => onSubmit(id)}
               id={id}
             >
               Delete
@@ -33,6 +33,7 @@ Contacts.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Contacts;
